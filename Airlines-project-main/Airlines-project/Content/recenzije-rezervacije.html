@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administracija Rezervacija i Recenzija</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .table-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .sort-icon {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MyProfile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html">MyProfile</a>
+                        <a class="dropdown-item" href="Index.html">Home</a>
+                        <a class="dropdown-item" id="logoutLink" href="#">Logout</a>
+                        <a class="dropdown-item" id="recenzije-rezervacijeLink" href="recenzije-rezervacije.html" style="display: none;">Rezervacije i Recenzije</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container mt-5">
+        <h2>Administracija Rezervacija</h2>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Korisnik</th>
+                        <th>Let</th>
+                        <th>Broj putnika</th>
+                        <th>Ukupna cena</th>
+                        <th>Odobri</th>
+                        <th>Otkazi</th>
+                    </tr>
+                </thead>
+                <tbody id="rezervacijeTabela">
+                    <!--Dinamicki sadrzaj-->
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Odobravanje Recenzija</h2>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Recenzet</th>
+                        <th>Naslov</th>
+                        <th>Sadrzaj</th>
+                        <th>Slika</th>
+                        <th>Aviokompanija ID</th>
+                        <th>Odbij</th>
+                        <th>Prihvati</th>
+                    </tr>
+                </thead>
+                <tbody id="recenzijeTabela">
+                    <!--Dinamicki sadrzaj-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+
+        function formatDate(date) {
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+
+            // Dodajemo nulu ispred meseca, dana, minuta i sati ako su manji od 10
+            if (month < 10) {
+                month = `0${month}`;
+            }
+            if (day < 10) {
+                day = `0${day}`;
+            }
+            if (hours < 10) {
+                hours = `0${hours}`;
+            }
+            if (minutes < 10) {
+                minutes = `0${minutes}`;
+            }
+
+            return `${day}.${month}.${year} ${hours}:${minutes}`;
+        }
+
+
+        $(document).ready(function () {
+            let currentUser = sessionStorage.getItem('currentUser');
+            currentUser = JSON.parse(currentUser);
+            $('#navbarDropdown').html(`MyProfile (${currentUser.KorisnickoIme})`);
+            // Učitavanje rezervacija
+            $.get('/api/rezervacije', function (data) {
+                data.forEach(rezervacija => {
+                    let rezHtml = `
+                                    <tr>
+                                        <td>${rezervacija.Korisnik}</td>
+                                        <td>${rezervacija.Let.Aviokompanija}:${rezervacija.Let.PolaznaDestinacija}-${rezervacija.Let.OdredisnaDestinacija} -- ${rezervacija.Let.DatumVremePolaska}</td>
+                                        <td>${rezervacija.BrojPutnika}</td>
+                                        <td>${rezervacija.UkupnaCena}</td>
+                                        <td>${rezervacija.Status === 0 ? `<button class="btn btn-success odobriRezervaciju" data-id="${rezervacija.RezervacijaId}">Odobri</button>` : ''}</td>
+                                        <td>${rezervacija.Status === 0 || rezervacija.Status == 1 ? `<button class="btn btn-danger otkaziRezervaciju" data-id="${rezervacija.RezervacijaId}">Otkazi</button>` : ''}</td>
+                                    </tr>
+                                `;
+                    $('#rezervacijeTabela').append(rezHtml);
+                });
+
+                // Klik događaj za odobravanje rezervacije
+                $('.odobriRezervaciju').on('click', function () {
+                    const rezervacijaId = $(this).data('id');
+                    $.ajax({
+                        type: 'POST',
+                        url: `/api/rezervacije/odobri/${rezervacijaId}`,
+                        success: function (response) {
+                            alert('Rezervacija uspešno odobrena!');
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                });
+
+                // Klik događaj za otkazivanje rezervacije
+                $('.otkaziRezervaciju').on('click', function () {
+                    const rezervacijaId = $(this).data('id');
+                    $.ajax({
+                        type: 'PUT',
+                        url: `/api/rezervacije/otkazi/${rezervacijaId}`,
+                        success: function (response) {
+                            alert('Rezervacija uspešno otkazana!');
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                });
+            });
+
+            // Učitavanje recenzija
+            $.get('/api/recenzije', function (data) {
+                data.forEach(recenzija => {
+                    let recHtml = `
+                                    <tr>
+                                    <td>${recenzija.Recezent}</td>
+                                    <td>${recenzija.Naslov}</td>
+                                    <td>${recenzija.Sadrzaj}</td>
+                                    <td><img src="${recenzija.Slika || 'https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'}" alt="Recenzija slika" class="card-img"></td>
+                                    <td>${recenzija.AviokompanijaId}</td>
+                                    <td>${recenzija.Status === 0 ? `<button class="btn btn-success odobriRecenziju" data-id="${recenzija.RecenzijaId}">Odobri</button>` : ''}</td>
+                                    <td>${recenzija.Status === 0 ? `<button class="btn btn-danger odbijRecenziju" data-id="${recenzija.RecenzijaId}">Odbij</button>` : ''}</td>
+                                    </tr>
+                                `;
+                    $('#recenzijeTabela').append(recHtml);
+                });
+
+                // Klik događaj za odobravanje recenzije
+                $('.odobriRecenziju').on('click', function () {
+                    const recenzijaId = $(this).data('id');
+                    $.ajax({
+                        type: 'POST',
+                        url: `/api/recenzije/odobri/${recenzijaId}`,
+                        success: function (response) {
+                            alert('Recenzija uspešno odobrena!');
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                });
+
+                // Klik događaj za odbijanje recenzije
+                $('.odbijRecenziju').on('click', function () {
+                    const recenzijaId = $(this).data('id');
+                    $.ajax({
+                        type: 'POST',
+                        url: `/api/recenzije/odbij/${recenzijaId}`,
+                        success: function (response) {
+                            alert('Recenzija uspešno odbijena!');
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

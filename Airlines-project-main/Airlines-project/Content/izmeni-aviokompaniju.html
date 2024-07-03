@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izmeni Aviokompaniju</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MyProfile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" id="myProfileLink" href="profile.html">MyProfile</a>
+                        <a class="dropdown-item" href="Index.html">Home</a>
+                        <a class="dropdown-item" id="logoutLink" href="#">Logout</a>
+                        <a class="dropdown-item" id="recenzije-rezervacijeLink" href="recenzije-rezervacije.html" style="display: none;">Rezervacije i Recenzije</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container mt-5">
+        <h2>Izmeni Aviokompaniju</h2>
+        <form id="izmeniAviokompanijuForm">
+            <div class="form-group">
+                <label for="naziv">Naziv</label>
+                <input type="text" class="form-control" id="naziv" required>
+            </div>
+            <div class="form-group">
+                <label for="adresa">Adresa</label>
+                <input type="text" class="form-control" id="adresa" required>
+            </div>
+            <div class="form-group">
+                <label for="kontaktInformacije">Kontakt Informacije</label>
+                <input type="text" class="form-control" id="kontaktInformacije" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sačuvaj</button>
+        </form>
+
+        <div class="d-flex justify-content-between align-items-center mt-5">
+            <h3>Letovi</h3>
+            <input type="button" id="dodajLet" value="Dodaj let" class="btn btn-primary" />
+        </div>
+
+        <!-- Pretraga letova -->
+        <div class="mb-3">
+            <form id="pretragaLetovaForm" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="pretragaPolaznaDestinacija" class="sr-only">Polazna destinacija</label>
+                    <input type="text" class="form-control" id="pretragaPolaznaDestinacija" placeholder="Polazna destinacija">
+                </div>
+                <div class="form-group mr-2">
+                    <label for="pretragaOdredisnaDestinacija" class="sr-only">Odredišna destinacija</label>
+                    <input type="text" class="form-control" id="pretragaOdredisnaDestinacija" placeholder="Odredišna destinacija">
+                </div>
+                <div class="form-group mr-2">
+                    <label for="pretragaDatumPolaska" class="sr-only">Datum polaska</label>
+                    <input type="date" class="form-control" id="pretragaDatumPolaska">
+                </div>
+                <button type="button" class="btn btn-primary" id="pretraziLetove">Pretraži</button>
+            </form>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Polazna Destinacija</th>
+                    <th>Odredisna Destinacija</th>
+                    <th>Datum Polaska</th>
+                    <th>Datum Dolaska</th>
+                    <th>Slobodnih Mesta</th>
+                    <th>Zauzetih Mesta</th>
+                    <th>Cena</th>
+                    <th>Izmena</th>
+                    <th>Obrisi</th>
+                </tr>
+            </thead>
+            <tbody id="letoviTabela">
+                <!-- Dinamički učitani letovi -->
+            </tbody>
+        </table>
+
+        <br />
+        <br />
+        <br />
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let currentUser = sessionStorage.getItem('currentUser');
+            currentUser = JSON.parse(currentUser);
+            $('#navbarDropdown').html(`MyProfile (${currentUser.KorisnickoIme})`);
+            // Funkcija za prikaz letova sa filtriranjem
+            function prikaziLetove(aviokompanijaId, polazna = null, odredisna = null, datumPolaska = null) {
+                if (aviokompanijaId) {
+                    // Brisanje
+                    $('#letoviTabela').empty();
+
+                    $.get(`/api/aviokompanije/${aviokompanijaId}`, function (data) {
+                        $('#aviokompanijaId').val(data.AviokompanijaId);
+                        $('#naziv').val(data.Naziv);
+                        $('#adresa').val(data.Adresa);
+                        $('#kontaktInformacije').val(data.KontaktInformacije);
+
+                        // Učitaj sve letove ako nisu zadati kriterijumi pretrage
+                        if (!polazna && !odredisna && !datumPolaska) {
+                            data.Letovi.forEach(letId => {
+
+                                $.get(`/api/letovi/${letId}`, function (letPodaci) {
+                                    dodajLetUTabelu(letPodaci);
+                                });
+                            });
+                        } else {
+                            // Filter letova prema kriterijumima pretrage
+                            data.Letovi.forEach(letId => {
+
+                                $.get(`/api/letovi/${letId}`, function (letPodaci) {
+                                    let match = true;
+                                    if (polazna && !letPodaci.PolaznaDestinacija.toLowerCase().startsWith(polazna.toLowerCase())) {
+                                        match = false;
+                                    }
+                                    if (odredisna && !letPodaci.OdredisnaDestinacija.toLowerCase().startsWith(odredisna.toLowerCase())) {
+                                        match = false;
+                                    }
+                                    if (datumPolaska && !letPodaci.DatumVremePolaska.includes(datumPolaska)) {
+                                        match = false;
+                                    }
+
+                                    if (match) {
+                                        dodajLetUTabelu(letPodaci);
+                                    }
+                                });
+                            });
+
+                            $('#pretragaPolaznaDestinacija').val('');
+                            $('#pretragaOdredisnaDestinacija').val('');
+                            $('#pretragaDatumPolaska').val('');
+                        }
+                    });
+                }
+            }
+
+            // Funkcija za dodavanje leta u tabelu
+            function dodajLetUTabelu(letPodaci) {
+                let letoviHtml = `
+                            <tr>
+                                <td>${letPodaci.PolaznaDestinacija}</td>
+                                <td>${letPodaci.OdredisnaDestinacija}</td>
+                                <td>${letPodaci.DatumVremePolaska}</td>
+                                <td>${letPodaci.DatumVremeDolaska}</td>
+                                <td>${letPodaci.BrojSlobodnihMesta}</td>
+                                <td>${letPodaci.BrojZauzetihMesta}</td>
+                                <td>${letPodaci.Cena}</td>
+                                <td>
+                                    <button class="btn btn-primary izmeniLet" data-letid="${letPodaci.LetId}">Izmeni</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger obrisiLet" data-letid="${letPodaci.LetId}">Obriši</button>
+                                </td>
+                            </tr>
+                        `;
+                $('#letoviTabela').append(letoviHtml);
+            }
+
+            // Kod za prikaz letova pri učitavanju stranice
+            const urlParams = new URLSearchParams(window.location.search);
+            const aviokompanijaId = urlParams.get('id');
+            prikaziLetove(aviokompanijaId);
+
+            // Event handler za pretragu letova
+            $('#pretraziLetove').on('click', function (event) {
+                event.preventDefault(); 
+
+                const polaznaDestinacija = $('#pretragaPolaznaDestinacija').val().trim();
+                const odredisnaDestinacija = $('#pretragaOdredisnaDestinacija').val().trim();
+                const datumPolaska = $('#pretragaDatumPolaska').val();
+
+                prikaziLetove(aviokompanijaId, polaznaDestinacija, odredisnaDestinacija, datumPolaska);
+            });
+
+            // Dodavanje event listenera za dugme za izmenu leta
+            $(document).on('click', '.izmeniLet', function () {
+                const letId = $(this).data('letid');
+                window.location.href = `izmenilet.html?letid=${letId}`;
+            });
+
+            $(document).on('click', '.obrisiLet', function () {
+                var letId = $(this).data('letid');
+
+                if (confirm('Da li ste sigurni da želite da obrišete ovaj let?')) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `/api/letovi/obrisi/${letId}`,
+                        success: function (response) {
+                            alert('Let uspešno obrisan!');
+                            //TODO funkcionalnost za azuriranje prikaza letova
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Greška prilikom brisanja leta:', xhr.responseText);
+                            alert('Greska: ' + xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+            // Redirekcija na dodavanje leta
+            $(document).on('click', '#dodajLet', function () {
+                window.location.href = `dodajlet.html?aviokompanijaid=${aviokompanijaId}`;
+            });
+
+            // Forma za izmenu aviokompanije
+            $('#izmeniAviokompanijuForm').on('submit', function (event) {
+                event.preventDefault(); // Spreciti podrazumevano ponašanje forme
+
+                const aviokompanija = {
+                    AviokompanijaId: aviokompanijaId,
+                    Naziv: $('#naziv').val(),
+                    Adresa: $('#adresa').val(),
+                    KontaktInformacije: $('#kontaktInformacije').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/api/aviokompanije/update`,
+                    data: JSON.stringify(aviokompanija),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert('Aviokompanija uspešno sačuvana!');
+                        window.location.href = "Index.html";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Greška prilikom čuvanja aviokompanije:', xhr.responseText);
+                        alert('Došlo je do greške prilikom čuvanja aviokompanije.');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

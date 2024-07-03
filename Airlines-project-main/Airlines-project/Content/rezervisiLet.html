@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervacija Leta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .reservation-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f0f0f0;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .reservation-form h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+    </style>
+</head>
+<body style="background-color: cadetblue;">
+
+    <div class="container mt-4">
+        <div class="reservation-form">
+            <h2 style="color:#007bff;">Rezervacija Leta</h2>
+            <form id="reservationForm">
+                <input type="hidden" id="letId" name="letId">
+                <div class="form-group">
+                    <label for="brojMesta">Broj Mesta za Rezervaciju</label>
+                    <input type="number" class="form-control" id="brojMesta" name="brojMesta" required min="1">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Rezerviši</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Preuzimanje LetId iz query string-a
+            let currentUser = sessionStorage.getItem('currentUser');
+            currentUser = JSON.parse(currentUser);
+            const korIme = currentUser.KorisnickoIme;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const letId = urlParams.get('LetId');
+
+            // Popunjavanje skrivenog polja sa LetId-om
+            $('#letId').val(letId);
+
+            $('#reservationForm').submit(function (event) {
+                event.preventDefault();
+                let brojMesta = $('#brojMesta').val();
+
+                // Validacija: Provera da li je broj mesta unet i da li je veći od 0
+                if (!brojMesta || brojMesta <= 0) {
+                    alert('Molimo unesite validan broj mesta za rezervaciju.');
+                    return;
+                }
+
+                // AJAX poziv za pronalaženje leta
+                $.ajax({
+                    type: 'GET',
+                    url: `/api/letovi/${letId}`,
+                    success: function (pronadjeniLet) {
+                        // AJAX poziv za rezervaciju leta
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/rezervacije/rezervisi',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                RezervacijaId: parseInt(letId), // Šaljemo id leta
+                                Let: pronadjeniLet,
+                                Korisnik: korIme,
+                                BrojPutnika: parseInt(brojMesta)  // Pretvaranje u broj
+                            }),
+                            success: function (response) {
+                                
+                                ('Uspešno ste rezervisali mesta.');
+
+                                window.location.href = 'index.html';
+                            },
+                            error: function (xhr, status, error) {
+                                alert('Greška prilikom rezervacije: ' + error);
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Greška prilikom pronalaženja leta: ' + error);
+                    }
+                });
+            });
+
+
+
+           
+        });
+    </script>
+
+</body>
+</html>

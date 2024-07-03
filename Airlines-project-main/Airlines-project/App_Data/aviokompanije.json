@@ -1,0 +1,174 @@
+[
+  {
+    "AviokompanijaId": 2,
+    "Naziv": "Lufthansa",
+    "Adresa": "Venloer Str. 142-153, 50672 Koln, Germany",
+    "KontaktInformacije": "+49 69 867985",
+    "Letovi": [
+      2,
+      8,
+      11,
+      12,
+      8,
+      9,
+      10
+    ],
+    "Recenzije": [
+      15
+    ],
+    "JeObrisana": false
+  },
+  {
+    "AviokompanijaId": 3,
+    "Naziv": "Airline Turkish",
+    "Adresa": "Istanbul Str. 151-153, 50672 Center, Turkey",
+    "KontaktInformacije": "+49 69 867987",
+    "Letovi": [
+      3,
+      4
+    ],
+    "Recenzije": [
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      10,
+      11,
+      12,
+      13,
+      14,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "JeObrisana": false
+  },
+  {
+    "AviokompanijaId": 4,
+    "Naziv": "Igor Tours",
+    "Adresa": "Strpce",
+    "KontaktInformacije": "+381 652568862",
+    "Letovi": [
+      9,
+      15,
+      2
+    ],
+    "Recenzije": null,
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 5,
+    "Naziv": "RAD",
+    "Adresa": "RAD",
+    "KontaktInformacije": "ARAD",
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 6,
+    "Naziv": "FF",
+    "Adresa": "FF",
+    "KontaktInformacije": "FF",
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 7,
+    "Naziv": "Prvi",
+    "Adresa": "Drugi",
+    "KontaktInformacije": "Treci",
+    "Letovi": [
+      10
+    ],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 8,
+    "Naziv": "Qatar Airways",
+    "Adresa": "Qatar Airways, Kneza Mihaila 30, 11000 Beograd",
+    "KontaktInformacije": "quatarairways@airline.com",
+    "Letovi": [
+      13,
+      14,
+      16,
+      1,
+      5,
+      7,
+      11,
+      12
+    ],
+    "Recenzije": [
+      16,
+      17,
+      19,
+      30
+    ],
+    "JeObrisana": false
+  },
+  {
+    "AviokompanijaId": 9,
+    "Naziv": "f",
+    "Adresa": null,
+    "KontaktInformacije": null,
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 10,
+    "Naziv": null,
+    "Adresa": null,
+    "KontaktInformacije": null,
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 11,
+    "Naziv": null,
+    "Adresa": null,
+    "KontaktInformacije": null,
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 12,
+    "Naziv": null,
+    "Adresa": null,
+    "KontaktInformacije": null,
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 13,
+    "Naziv": "Balkan Fly",
+    "Adresa": "Novi Sad, Studentski dom 'Veljko Vlahovic'",
+    "KontaktInformacije": "www.balanfly.com",
+    "Letovi": [
+      6
+    ],
+    "Recenzije": [
+      32
+    ],
+    "JeObrisana": true
+  },
+  {
+    "AviokompanijaId": 14,
+    "Naziv": "Provera",
+    "Adresa": "Mislim da je dobra adr.",
+    "KontaktInformacije": "broj telefona",
+    "Letovi": [],
+    "Recenzije": [],
+    "JeObrisana": true
+  }
+]

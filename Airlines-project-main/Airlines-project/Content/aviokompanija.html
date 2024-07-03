@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviokompanija</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .aviokompanija-details {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .aviokompanija-details h5 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .aviokompanija-details p, .aviokompanija-details h6 {
+            margin-bottom: 5px;
+        }
+
+        .aviokompanija-details ul {
+            padding-left: 20px;
+        }
+
+        .aviokompanija-details li {
+            margin-bottom: 10px;
+        }
+
+        .aviokompanija-details img {
+            max-width: 140px;
+            max-height: 350px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MyProfile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html">MyProfile</a>
+                        <a class="dropdown-item" href="login.html">Login</a>
+                        <a class="dropdown-item" id="logoutLink" href="#">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Podaci o aviokompaniji</h2>
+
+        <div id="aviokompanijaDetails" class="aviokompanija-details"></div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const aviokompanijaId = urlParams.get('id');
+
+            if (aviokompanijaId) {
+                // Učitavanje podataka o aviokompaniji na osnovu ID-ja
+                $.get(`/api/aviokompanije/${aviokompanijaId}`, function (aviokompanija) {
+                    const aviokompanijaDetails = $('#aviokompanijaDetails');
+
+                    generateLetoviList(aviokompanija.Letovi, function (letoviList) {
+                        generateRecenzijeList(aviokompanija.Recenzije, function (recenzijeList) {
+                            const aviokompanijaElement = `
+                                            <div>
+                                                <h5>${aviokompanija.Naziv}</h5>
+                                                <p><strong>Adresa:</strong> ${aviokompanija.Adresa}</p>
+                                                <p><strong>Kontakt:</strong> ${aviokompanija.KontaktInformacije}</p>
+                                                <h6>Letovi:</h6>
+                                                <ul>
+                                                    ${letoviList}
+                                                </ul>
+                                                <h6>Recenzije:</h6>
+                                                <ul>
+                                                    ${recenzijeList}
+                                                </ul>
+                                            </div>
+                                        `;
+                            aviokompanijaDetails.html(aviokompanijaElement);
+                        });
+                    });
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Greška prilikom učitavanja podataka o aviokompaniji:', textStatus, errorThrown);
+                });
+            } else {
+                // Ukoliko ne postoji ID, uputiti korisnika nazad na stranicu sa listom aviokompanija
+                console.error('Nedostaje ID aviokompanije.');
+                window.location.href = 'index.html';
+            }
+        });
+
+        function generateLetoviList(letoviIds, callback) {
+            fetch('/api/letovi')
+                .then(response => response.json())
+                .then(letovi => {
+                    let letoviList = '';
+                    if (letovi.length > 0) {
+                        letovi.forEach(let => {
+                            if (letoviIds.includes(let.LetId)) {
+                                letoviList += `
+                                                <li>
+                                                    ${let.PolaznaDestinacija} - ${let.OdredisnaDestinacija}, Polazak: ${new Date(let.DatumVremePolaska).toLocaleString()}, Dolazak: ${new Date(let.DatumVremeDolaska).toLocaleString()}, Mesta: ${let.BrojSlobodnihMesta}, Cena: $${let.Cena}
+                                                </li>
+                                            `;
+                            }
+                        });
+                    } else {
+                        letoviList = '<li>Nema dostupnih letova.</li>';
+                    }
+                    callback(letoviList); 
+                })
+                .catch(error => {
+                    console.error('Greška prilikom dohvatanja letova:', error);
+                    callback('<li>Greška prilikom dohvatanja letova.</li>'); 
+                });
+        }
+
+
+        function generateRecenzijeList(recenzijeIds, callback) {
+            fetch('/api/recenzije')
+                .then(response => response.json())
+                .then(recenzije => {
+                    let recenzijeList = '';
+                    if (recenzije.length > 0) {
+                        recenzije.forEach(recenzija => {
+                            if ((recenzijeIds.includes(recenzija.RecenzijaId)) && recenzija.Status == 1) {
+                                
+                                let recenzijaHtml = `<li><strong>${recenzija.Naslov}</strong><br/>${recenzija.Sadrzaj}<br/>`;
+
+                                if (recenzija.Slika && recenzija.Slika.trim() !== '') {
+                                    recenzijaHtml += `<img src="${recenzija.Slika}" alt="Recenzija slika" style="max-width: 140px; max-height: 350px;" /><br/>`;
+
+                                } else {
+                                    recenzijaHtml += `<img src="https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" alt="Recenzija slika" style="max-width: 140px; max-height: 350px;" /><br/>`;
+                                }
+                                recenzijaHtml += `<em>Autor: ${recenzija.Recezent}</em></li> `;
+
+                                recenzijeList += recenzijaHtml;
+                            }
+                        });
+                    } else {
+                        recenzijeList = '<li>Nema dostupnih recenzija.</li>';
+                    }
+                    callback(recenzijeList); 
+                })
+                .catch(error => {
+                    console.error('Greška prilikom dohvatanja recenzija:', error);
+                    callback('<li>Greška prilikom dohvatanja recenzija.</li>'); 
+                });
+        }
+    </script>
+</body>
+</html>

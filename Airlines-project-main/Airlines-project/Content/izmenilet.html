@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izmeni Let</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Izmeni Let</h2>
+        <form id="izmeniLetForm">
+            <div class="form-group">
+                <label for="aviokompanija">Aviokompanija</label>
+                <input type="text" class="form-control" id="aviokompanija" readonly>
+            </div>
+            <div class="form-group">
+                <label for="polaznaDestinacija">Polazna destinacija</label>
+                <input type="text" class="form-control" id="polaznaDestinacija" readonly>
+            </div>
+            <div class="form-group">
+                <label for="odredisnaDestinacija">Odredišna destinacija</label>
+                <input type="text" class="form-control" id="odredisnaDestinacija" readonly>
+            </div>
+            <div class="form-group">
+                <label for="datumVremePolaska">Datum i vreme polaska</label>
+                <input type="datetime-local" class="form-control" id="datumVremePolaska">
+            </div>
+            <div class="form-group">
+                <label for="datumVremeDolaska">Datum i vreme dolaska</label>
+                <input type="datetime-local" class="form-control" id="datumVremeDolaska">
+            </div>
+            <div class="form-group">
+                <label for="brojSlobodnihMesta">Broj slobodnih mesta</label>
+                <input type="number" class="form-control" id="brojSlobodnihMesta">
+            </div>
+            <div class="form-group">
+                <label for="brojZauzetihMesta">Broj zauzetih mesta</label>
+                <input type="number" class="form-control" id="brojZauzetihMesta">
+            </div>
+            <div class="form-group">
+                <label for="cena">Cena</label>
+                <input type="number" class="form-control" id="cena">
+            </div>
+            <button type="submit" class="btn btn-primary">Sačuvaj</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const letId = urlParams.get('letid');
+
+            $.get(`/api/letovi/${letId}`, function (letPodaci) {
+                $('#aviokompanija').val(letPodaci.Aviokompanija);
+                $('#polaznaDestinacija').val(letPodaci.PolaznaDestinacija);
+                $('#odredisnaDestinacija').val(letPodaci.OdredisnaDestinacija);
+                $('#datumVremePolaska').val(letPodaci.DatumVremePolaska);
+                $('#datumVremeDolaska').val(letPodaci.DatumVremeDolaska);
+                $('#brojSlobodnihMesta').val(letPodaci.BrojSlobodnihMesta);
+                $('#brojZauzetihMesta').val(letPodaci.BrojZauzetihMesta);
+                $('#cena').val(letPodaci.Cena);
+            });
+
+            $('#izmeniLetForm').on('submit', function (event) {
+                event.preventDefault();
+
+                const izmenjenLet = {
+                    LetId: letId,
+                    DatumVremePolaska: $('#datumVremePolaska').val(),
+                    DatumVremeDolaska: $('#datumVremeDolaska').val(),
+                    BrojSlobodnihMesta: $('#brojSlobodnihMesta').val(),
+                    BrojZauzetihMesta: $('#brojZauzetihMesta').val(),
+                    Cena: $('#cena').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/api/letovi/azuriraj`,
+                    data: JSON.stringify(izmenjenLet),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert('Let uspešno izmenjen!');
+                        window.location.href = "Index.html"; 
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Greška prilikom izmene leta:', xhr.responseText);
+
+                        alert(`Greška: ${xhr.status} - ${xhr.responseText}`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

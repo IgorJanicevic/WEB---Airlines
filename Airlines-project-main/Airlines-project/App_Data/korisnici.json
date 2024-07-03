@@ -1,0 +1,86 @@
+[
+  {
+    "KorisnickoIme": "IgorJ",
+    "Lozinka": "123",
+    "Ime": "Igor",
+    "Prezime": "Janicevic",
+    "Email": "igorjanicevic21@example.com",
+    "DatumRodjenja": "2002-06-17",
+    "Pol": 0,
+    "TipKorisnika": 0,
+    "ListaRezervacija": [
+      100,
+      1154,
+      1154,
+      585,
+      665,
+      269,
+      1075,
+      1075,
+      497,
+      1086,
+      545,
+      389,
+      861,
+      398
+    ]
+  },
+  {
+    "KorisnickoIme": "ana_89",
+    "Lozinka": "ana123!",
+    "Ime": "Ana",
+    "Prezime": "Anić",
+    "Email": "ana.anic@example.com",
+    "DatumRodjenja": "1989-12-28",
+    "Pol": 1,
+    "TipKorisnika": 1,
+    "ListaRezervacija": []
+  },
+  {
+    "KorisnickoIme": "Ivan Jan",
+    "Lozinka": "ivan",
+    "Ime": "Ivan",
+    "Prezime": "Janicevic",
+    "Email": "ivanjann22@yahoo.com",
+    "DatumRodjenja": "2003-03-11",
+    "Pol": 0,
+    "TipKorisnika": 0,
+    "ListaRezervacija": [
+      1002,
+      1002
+    ]
+  },
+  {
+    "KorisnickoIme": "admin",
+    "Lozinka": "admin",
+    "Ime": "Mia",
+    "Prezime": "Dabovic",
+    "Email": "miamia99@gmail.com",
+    "DatumRodjenja": "2003-11-05",
+    "Pol": 1,
+    "TipKorisnika": 1,
+    "ListaRezervacija": []
+  },
+  {
+    "KorisnickoIme": "Milica",
+    "Lozinka": "123",
+    "Ime": "Milica",
+    "Prezime": "Milic",
+    "Email": "milcamilic03@gmail.com",
+    "DatumRodjenja": "2003-03-11",
+    "Pol": 1,
+    "TipKorisnika": 0,
+    "ListaRezervacija": []
+  },
+  {
+    "KorisnickoIme": "Test",
+    "Lozinka": "test",
+    "Ime": "Dusan",
+    "Prezime": "Tadic",
+    "Email": "dusand@gmail.com",
+    "DatumRodjenja": "1999-05-03",
+    "Pol": 1,
+    "TipKorisnika": 0,
+    "ListaRezervacija": []
+  }
+]

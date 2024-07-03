@@ -1,0 +1,212 @@
+[
+  {
+    "RecenzijaId": 2,
+    "Recezent": "Baki",
+    "Naslov": "Vrlo dobra usluga, ali skupa",
+    "Sadrzaj": "Usluga je bila vrlo dobra, ali karta je bila skuplja nego što sam očekivao.",
+    "Slika": "https://www.kurir.rs/data/images/2016/12/19/09/1061161_er-korjo-severna-koreja_ls.jpg",
+    "AviokompanijaId": 2,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 3,
+    "Recezent": "Teodora22",
+    "Naslov": "Dobra usluga",
+    "Sadrzaj": "Usluga je bila na zadovoljavajućem nivou, ali moglo bi biti bolje.",
+    "Slika": "https://static.vecteezy.com/system/resources/previews/025/476/005/large_2x/portrait-selfie-happy-tourist-couple-taking-selfie-inside-airplane-ai-generated-photo.jpeg",
+    "AviokompanijaId": 3,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 5,
+    "Recezent": "IgorJ",
+    "Naslov": "Bravo za vas!",
+    "Sadrzaj": "SVE POHVALE!!",
+    "Slika": "",
+    "AviokompanijaId": 3,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 15,
+    "Recezent": "IgorJ",
+    "Naslov": "Sve super!",
+    "Sadrzaj": "Osoblje u avionu je bilo jako pristojno, svaka pohvala.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 2,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 16,
+    "Recezent": "IgorJ",
+    "Naslov": "BRAVO!",
+    "Sadrzaj": "Svaka cast za osoblje, jako ljubazni, profesionalni i brzi. Bili su tu u svakom trenutku!\nJedan veoma udoban let, sve pohvale!",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 8,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 17,
+    "Recezent": "IgorJ",
+    "Naslov": "Solidno",
+    "Sadrzaj": "Cena je skuplja nego kod ostalih kompanija ali je i usluga bolja.\nOk je.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 8,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 18,
+    "Recezent": "IgorJ",
+    "Naslov": "SUPER",
+    "Sadrzaj": "Sedista preudobna, hrana odlicna. Nista vise ne bih dodao.",
+    "Slika": "https://www.standard.co.me/wp-content/uploads/2019/01/42a6e7ff6ac3dc17f1f69ef8f922c541.jpg",
+    "AviokompanijaId": 3,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 19,
+    "Recezent": "IgorJ",
+    "Naslov": "Fino",
+    "Sadrzaj": "Bilo je sve kako sam i ocekivao, zadovljan sam.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 3,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 20,
+    "Recezent": "IgorJ",
+    "Naslov": "Turbulentno ",
+    "Sadrzaj": "Ovo je bilo moje prvo putovanje avionom, u pocetku je bilo malo zeznuto, ali sam se kasnije opustio i bilo je sve super!\nRadujem se sledecem letu.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 3,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 21,
+    "Recezent": "IgorJ",
+    "Naslov": "Preskupo",
+    "Sadrzaj": "Karta je bila preskupa i osoblje neljubazno.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 3,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 22,
+    "Recezent": "IgorJ",
+    "Naslov": "Okej",
+    "Sadrzaj": "Putovanje nije bilo nista posebno.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 3,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 23,
+    "Recezent": "IgorJ",
+    "Naslov": "Nezaboravno",
+    "Sadrzaj": "Ekipa u avionu je bila prezanimljiva, osoblje je bilo svima na usluzi.\nSjajno!!",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 2,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 24,
+    "Recezent": "IgorJ",
+    "Naslov": "Radi",
+    "Sadrzaj": "Radi sve sto treba",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 2,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 25,
+    "Recezent": "IgorJ",
+    "Naslov": "Predugo",
+    "Sadrzaj": "Trajalo je duze od ocekivanog",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 0,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 26,
+    "Recezent": "IgorJ",
+    "Naslov": "Predugo",
+    "Sadrzaj": "Trajalo je duze od predvijenog",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 0,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 27,
+    "Recezent": "IgorJ",
+    "Naslov": "RADI",
+    "Sadrzaj": "Provera xD",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 6,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 28,
+    "Recezent": "IgorJ",
+    "Naslov": "RADI",
+    "Sadrzaj": "Provera xD.",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 6,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 29,
+    "Recezent": "IgorJ",
+    "Naslov": "Rad",
+    "Sadrzaj": "Okej to je to\n",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 6,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 30,
+    "Recezent": "IgorJ",
+    "Naslov": "Poslednja pred odbrane",
+    "Sadrzaj": "Ssada radi, bio je problem iz starije verzije gde su dve av imale istu recenziju",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 8,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RecenzijaId": 31,
+    "Recezent": "IgorJ",
+    "Naslov": "Prelepo",
+    "Sadrzaj": "Ekipa je bila jako zanimljiva a osoblje jako pristojno!!!",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 13,
+    "Status": 0,
+    "JeObrisana": true
+  },
+  {
+    "RecenzijaId": 32,
+    "Recezent": "IgorJ",
+    "Naslov": "Prelepo",
+    "Sadrzaj": "Bilo je nezaboravno!! :)",
+    "Slika": "https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg",
+    "AviokompanijaId": 13,
+    "Status": 1,
+    "JeObrisana": true
+  }
+]

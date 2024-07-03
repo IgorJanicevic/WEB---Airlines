@@ -1,0 +1,275 @@
+[
+  {
+    "RezervacijaId": 100,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 1,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Katar",
+      "OdredisnaDestinacija": "Beograd",
+      "DatumVremePolaska": "2024-06-28T15:50:00",
+      "DatumVremeDolaska": "2024-06-29T15:50:00",
+      "BrojSlobodnihMesta": 294,
+      "BrojZauzetihMesta": 6,
+      "Cena": 469.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 6,
+    "UkupnaCena": 2814.0,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 1154,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 2,
+      "Aviokompanija": "Igor Tours",
+      "PolaznaDestinacija": "Strpce",
+      "OdredisnaDestinacija": "Novi Sad",
+      "DatumVremePolaska": "2024-06-25T15:54:00",
+      "DatumVremeDolaska": "2024-06-26T17:54:00",
+      "BrojSlobodnihMesta": 95,
+      "BrojZauzetihMesta": 5,
+      "Cena": 25.0,
+      "Status": 2,
+      "JeObrisana": true
+    },
+    "BrojPutnika": 2,
+    "UkupnaCena": 50.0,
+    "Status": 2,
+    "JeObrisana": true
+  },
+  {
+    "RezervacijaId": 585,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 2,
+      "Aviokompanija": "Igor Tours",
+      "PolaznaDestinacija": "Strpce",
+      "OdredisnaDestinacija": "Novi Sad",
+      "DatumVremePolaska": "2024-06-25T15:54:00",
+      "DatumVremeDolaska": "2024-06-26T17:54:00",
+      "BrojSlobodnihMesta": 95,
+      "BrojZauzetihMesta": 5,
+      "Cena": 25.0,
+      "Status": 2,
+      "JeObrisana": true
+    },
+    "BrojPutnika": 5,
+    "UkupnaCena": 125.0,
+    "Status": 0,
+    "JeObrisana": true
+  },
+  {
+    "RezervacijaId": 665,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 3,
+      "Aviokompanija": "Airline Turkish",
+      "PolaznaDestinacija": "Barselona",
+      "OdredisnaDestinacija": "Moskva",
+      "DatumVremePolaska": "2024-06-25T21:29:00",
+      "DatumVremeDolaska": "2024-06-25T23:29:00",
+      "BrojSlobodnihMesta": 304,
+      "BrojZauzetihMesta": 2,
+      "Cena": 310.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 2,
+    "UkupnaCena": 620.0,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 1002,
+    "Korisnik": "Ivan Jan",
+    "Let": {
+      "LetId": 5,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Atina",
+      "OdredisnaDestinacija": "Milano",
+      "DatumVremePolaska": "2024-04-23T17:36:00",
+      "DatumVremeDolaska": "2024-04-24T19:36:00",
+      "BrojSlobodnihMesta": 149,
+      "BrojZauzetihMesta": 11,
+      "Cena": 119.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 2,
+    "UkupnaCena": 238.0,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 269,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 6,
+      "Aviokompanija": "Balkan Fly",
+      "PolaznaDestinacija": "Novi Sad",
+      "OdredisnaDestinacija": "Kusadasi",
+      "DatumVremePolaska": "2024-06-11T21:52:00",
+      "DatumVremeDolaska": "2024-06-12T21:52:00",
+      "BrojSlobodnihMesta": 294,
+      "BrojZauzetihMesta": 6,
+      "Cena": 70.0,
+      "Status": 2,
+      "JeObrisana": true
+    },
+    "BrojPutnika": 6,
+    "UkupnaCena": 420.0,
+    "Status": 1,
+    "JeObrisana": true
+  },
+  {
+    "RezervacijaId": 1075,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 7,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Meksiko",
+      "OdredisnaDestinacija": "Peking",
+      "DatumVremePolaska": "2024-06-18T21:55:00",
+      "DatumVremeDolaska": "2024-06-19T21:55:00",
+      "BrojSlobodnihMesta": 167,
+      "BrojZauzetihMesta": 3,
+      "Cena": 199.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 5,
+    "UkupnaCena": 995.0,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 497,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 7,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Meksiko",
+      "OdredisnaDestinacija": "Peking",
+      "DatumVremePolaska": "2024-06-18T21:55:00",
+      "DatumVremeDolaska": "2024-06-19T21:55:00",
+      "BrojSlobodnihMesta": 167,
+      "BrojZauzetihMesta": 3,
+      "Cena": 199.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 3,
+    "UkupnaCena": 597.0,
+    "Status": 1,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 1086,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 5,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Atina",
+      "OdredisnaDestinacija": "Milano",
+      "DatumVremePolaska": "2024-04-23T17:36:00",
+      "DatumVremeDolaska": "2024-04-24T19:36:00",
+      "BrojSlobodnihMesta": 149,
+      "BrojZauzetihMesta": 11,
+      "Cena": 119.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 11,
+    "UkupnaCena": 1309.0,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 545,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 8,
+      "Aviokompanija": "Lufthansa",
+      "PolaznaDestinacija": "Minhen",
+      "OdredisnaDestinacija": "Paris",
+      "DatumVremePolaska": "2024-06-18T09:49:00",
+      "DatumVremeDolaska": "2024-06-18T13:49:00",
+      "BrojSlobodnihMesta": 145,
+      "BrojZauzetihMesta": 5,
+      "Cena": 49.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 5,
+    "UkupnaCena": 245.0,
+    "Status": 2,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 389,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 9,
+      "Aviokompanija": "Lufthansa",
+      "PolaznaDestinacija": "Zagreb",
+      "OdredisnaDestinacija": "Cirih",
+      "DatumVremePolaska": "2024-06-24T09:53:00",
+      "DatumVremeDolaska": "2024-06-25T11:53:00",
+      "BrojSlobodnihMesta": 50,
+      "BrojZauzetihMesta": 5,
+      "Cena": 22.0,
+      "Status": 2,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 5,
+    "UkupnaCena": 110.0,
+    "Status": 3,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 861,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 10,
+      "Aviokompanija": "Lufthansa",
+      "PolaznaDestinacija": "Beograd",
+      "OdredisnaDestinacija": "Rim",
+      "DatumVremePolaska": "2024-07-04T09:58:00",
+      "DatumVremeDolaska": "2024-07-04T11:58:00",
+      "BrojSlobodnihMesta": 200,
+      "BrojZauzetihMesta": 0,
+      "Cena": 110.0,
+      "Status": 0,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 2,
+    "UkupnaCena": 220.0,
+    "Status": 0,
+    "JeObrisana": false
+  },
+  {
+    "RezervacijaId": 398,
+    "Korisnik": "IgorJ",
+    "Let": {
+      "LetId": 12,
+      "Aviokompanija": "Qatar Airways",
+      "PolaznaDestinacija": "Sofija",
+      "OdredisnaDestinacija": "Istanbul",
+      "DatumVremePolaska": "2024-07-16T09:59:00",
+      "DatumVremeDolaska": "2024-07-16T11:00:00",
+      "BrojSlobodnihMesta": 80,
+      "BrojZauzetihMesta": 0,
+      "Cena": 69.0,
+      "Status": 0,
+      "JeObrisana": false
+    },
+    "BrojPutnika": 6,
+    "UkupnaCena": 414.0,
+    "Status": 0,
+    "JeObrisana": false
+  }
+]

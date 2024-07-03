@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kreiraj Recenziju</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MyProfile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html">MyProfile</a>
+                        <a class="dropdown-item" href="Index.html">Home</a>
+                        <a class="dropdown-item" id="logoutLink" href="#">Logout</a>
+                        <a class="dropdown-item" id="recenzije-rezervacijeLink" href="recenzije-rezervacije.html" style="display: none;">Rezervacije i Recenzije</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Kreiraj Recenziju</h1>
+        <form id="recenzijaForm">
+            <input type="hidden" id="aviokompanijaId">
+            <div class="form-group">
+                <label for="naslov">Naslov:</label>
+                <input type="text" class="form-control" id="naslov" required>
+            </div>
+            <div class="form-group">
+                <label for="sadrzaj">Sadržaj:</label>
+                <textarea class="form-control" id="sadrzaj" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="slika">Slika (opciono):</label>
+                <input type="file" class="form-control-file" id="slika">
+            </div>
+            <button type="submit" class="btn btn-primary">Pošalji recenziju</button>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            let currentUser = sessionStorage.getItem('currentUser');
+            currentUser = JSON.parse(currentUser);
+            $('#navbarDropdown').html(`MyProfile (${currentUser.KorisnickoIme})`);
+
+            // Dohvatanje LetId iz URL-a
+            const urlParams = new URLSearchParams(window.location.search);
+            const letId = urlParams.get('LetId');
+            let aviokompanijaId = 0;
+
+            // Dohvatanje AviokompanijaId na osnovu LetId
+            $.get(`/api/aviokompanije/let/${letId}`, function (data) {
+                $('#aviokompanijaId').val(data.AviokompanijaId);
+                aviokompanijaId = data.AviokompanijaId;
+            });
+
+            // Submit forma
+            $('#recenzijaForm').submit(function (event) {
+                event.preventDefault();
+
+                // Dobijanje podataka iz forme
+                let naslov = $('#naslov').val();
+                let sadrzaj = $('#sadrzaj').val();
+                let slika = $('#slika')[0].files[0]; // Dobijanje izabrane slike
+
+                // Priprema podataka za slanje na server
+                let recenzija = {
+                    Naslov: naslov,
+                    Sadrzaj: sadrzaj,
+                    Slika: slika ? URL.createObjectURL(slika) : 'https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg',
+                    Recezent: sessionStorage.getItem('currentUser') ? JSON.parse(sessionStorage.getItem('currentUser')).KorisnickoIme : 'Anonimni korisnik',
+                    AviokompanijaId: aviokompanijaId,
+                    Status: 0
+                };
+
+                // Slanje recenzije na server
+                $.ajax({
+                    url: '/api/recenzije',
+                    type: 'POST',
+                    data: JSON.stringify(recenzija),
+                    contentType: 'application/json',
+                    processData: false, 
+                    success: function () {
+                        alert('Recenzija uspešno poslata.');
+                        window.location.href = 'Index.html';
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Greška prilikom slanja recenzije:', error);
+                        alert('Greška prilikom slanja recenzije: ' + error);
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

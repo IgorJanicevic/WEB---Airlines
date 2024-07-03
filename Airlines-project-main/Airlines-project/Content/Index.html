@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travelgo</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/aviokompanije.js"></script>
+    <script src="../Scripts/index.js"></script>
+
+    <style>
+        .sort-btn {
+            margin-top: 32px;
+        }
+
+        /* Dodatak za dugmice u istom redu */
+        .form-row .col-md-2,
+        .form-row .col-md {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .avio-link
+        {
+            color: blue;
+        }
+
+        #aviokompanijeList a {
+            margin: 5px;
+            padding: 10px 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #007bff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #aviokompanijeList a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MyProfile
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html">MyProfile</a>
+                        <a class="dropdown-item" id="loginLink" href="login.html">Login</a>
+                        <a class="dropdown-item" id="logoutLink" href="#">Logout</a>
+                        <a class="dropdown-item" id="recenzije-rezervacijeLink" href="recenzije-rezervacije.html" style="display: none;">Rezervacije i Recenzije</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Aktivni letovi</h1>
+        <form id="searchForm">
+            <div class="form-row align-items-end">
+                <div class="col-md-2 mb-2">
+                    <input type="text" class="form-control" id="aviokompanija" placeholder="Aviokompanija">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <input type="text" class="form-control" id="polaznaDestinacija" placeholder="Polazna destinacija">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <input type="text" class="form-control" id="odredisnaDestinacija" placeholder="Odredišna destinacija">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <input type="date" class="form-control" id="datumPolaska">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <input type="date" class="form-control" id="datumDolaska">
+                </div>
+                <div class="col-md mb-2">
+                    <button type="submit" class="btn btn-primary btn-block">Pretraga</button>
+                </div>
+                <div class="col-md mb-2">
+                    <button id="sortBtn" type="button" class="btn btn-primary btn-block">Sortiraj</button>
+                </div>
+            </div>
+        </form>
+        <table id="flightsTable" class="table">
+            <thead>
+                <tr>
+                    <th>Aviokompanija</th>
+                    <th>Polazna destinacija</th>
+                    <th>Odredišna destinacija</th>
+                    <th>Datum i vreme polaska</th>
+                    <th>Datum i vreme dolaska</th>
+                    <th>Broj slobodnih mesta</th>
+                    <th>Broj zauzetih mesta</th>
+                    <th>Cena</th>
+                </tr>
+            </thead>
+            <tbody id="bodyF">
+                <!-- Dinamički sadržaj -->
+            </tbody>
+        </table>
+    </div>
+
+    <div  class="container mt-4" id="aviokompanijaAdd"></div>
+
+
+    <div class="container mt-4">
+        <h2 class="text-left mb-4">Sve Aviokompanije</h2>
+        <div id="aviokompanijeList" class="list-group">
+            <!-- Dinamički sadržaj -->
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+</body>
+</html>

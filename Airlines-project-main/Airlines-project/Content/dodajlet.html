@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj Let</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Dodaj Let</h2>
+        <form id="dodajLetForm">
+            <div class="form-group">
+                <label for="polaznaDestinacija">Polazna destinacija</label>
+                <input type="text" class="form-control" id="polaznaDestinacija" required>
+            </div>
+            <div class="form-group">
+                <label for="odrednisnaDestinacija">Odredišna destinacija</label>
+                <input type="text" class="form-control" id="odrednisnaDestinacija" required>
+            </div>
+            <div class="form-group">
+                <label for="datumPolaska">Datum polaska</label>
+                <input type="datetime-local" class="form-control" id="datumPolaska" required>
+            </div>
+            <div class="form-group">
+                <label for="datumDolaska">Datum dolaska</label>
+                <input type="datetime-local" class="form-control" id="datumDolaska" required>
+            </div>
+            <div class="form-group">
+                <label for="brojMesta">Broj slobodnih mesta</label>
+                <input type="number" class="form-control" id="brojMesta" required>
+            </div>
+            <div class="form-group">
+                <label for="cena">Cena</label>
+                <input type="number" class="form-control" id="cena" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj Let</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const aviokompanijaId = urlParams.get('aviokompanijaid');
+
+            $('#dodajLetForm').on('submit', function (event) {
+                event.preventDefault();
+                const letData = {
+                    LetId: aviokompanijaId,
+                    PolaznaDestinacija: $('#polaznaDestinacija').val().trim(),
+                    OdredisnaDestinacija: $('#odrednisnaDestinacija').val().trim(),
+                    DatumVremePolaska: $('#datumPolaska').val().trim(),
+                    DatumVremeDolaska: $('#datumDolaska').val().trim(),
+                    BrojSlobodnihMesta: $('#brojMesta').val().trim(),
+                    Cena: $('#cena').val().trim(),
+                };
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/letovi/dodaj', 
+                    data: JSON.stringify(letData),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        alert('Let uspešno dodat!');
+                        window.location.href = `aviokompanija.html?id=${aviokompanijaId}`;
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Greška prilikom dodavanja leta:', xhr.responseText);
+                        alert('Došlo je do greške prilikom dodavanja leta.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

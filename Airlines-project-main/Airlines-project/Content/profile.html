@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .profile-form {
+            background: #f0f0f0;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body style="background-color: cadetblue;">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="Index.html">Travelgo</a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="navMyProfile">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html" id="navLogin">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="navLogout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-form">
+                    <h2 style="color:#007bff;">My Profile</h2>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="username">Korisničko ime</label>
+                            <input type="text" class="form-control" id="username" name="username" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="ime">Ime</label>
+                            <input type="text" class="form-control" id="ime" name="ime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prezime">Prezime</label>
+                            <input type="text" class="form-control" id="prezime" name="prezime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="datumRodjenja">Datum rođenja</label>
+                            <input type="date" class="form-control" id="datumRodjenja" name="datumRodjenja" required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="pol">Pol</label>
+                            <select class="form-control" id="pol" name="pol" required>
+                                <option value="Muski">Muški</option>
+                                <option value="Zenski">Ženski</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="btnUpdate" class="btn btn-primary btn-block">Ažuriraj</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-8" style="">
+                <div class="table-container" id="tabelaZaKorisnika">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#navLogin').hide();
+            $('#navLogout').hide();
+
+            let currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                currentUser = JSON.parse(currentUser);
+                $('#navLogin').hide();
+                $('#navLogout').show();
+                $('#navMyProfile').attr('href', 'profile.html');
+                populateProfile(currentUser);
+
+
+                if (currentUser.TipKorisnika == 0) {
+                    var dodajTabelu = ` <h2 style="color:#007bff;">Moje Rezervacije</h2>
+                                         <div class="form-group">
+                                             <label for="statusFilter">Filtriraj po statusu</label>
+                                             <select class="form-control" id="statusFilter" name="statusFilter">
+                                                 <option value="0">KREIRANA</option>
+                                                 <option value="1">ODOBRENA</option>
+                                                 <option value="2">OTKAZANA</option>
+                                                 <option value="3">ZAVRŠENA</option>
+                                             </select>
+                                         </div>
+                                         <table class="table table-sm">
+                                             <thead>
+                                                 <tr>
+                                                     <th>Kompanija</th>
+                                                     <th>Polazna destinacija</th>
+                                                     <th>Odredišna destinacija</th>
+                                                     <th>Datum polaska</th>
+                                                     <th>Datum dolaska</th>
+                                                     <th>Broj rezervacija</th>
+                                                     <th>Cena</th>
+                                                     <th class="otkaziRow">Otkazi</th>
+                                                 </tr>
+                                             </thead>
+                                             <tbody id="reservationTableBody">
+                                                 <!-- Rezervacije će biti prikazane ovde -->
+                                             </tbody>
+                                         </table>`;
+
+                    $('#tabelaZaKorisnika').append(dodajTabelu);
+                    loadReservations(currentUser, $('#statusFilter').val());
+
+                } else {
+                    var dodajTabelu = `<h2 style="color:#007bff;">Svi korisnici</h2>
+                     <div class="form-row mb-3">
+                         <div class="form-group col-md-3">
+                             <label for="imeFilter">Ime</label>
+                             <input type="text" class="form-control" id="imeFilter" name="userFilter" placeholder="Ime">
+                         </div>
+                         <div class="form-group col-md-3">
+                             <label for="prezimeFilter">Prezime</label>
+                             <input type="text" class="form-control" id="prezimeFilter" name="userFilter" placeholder="Prezime">
+                         </div>
+                         <div class="form-group col-md-2">
+                             <label for="datumodFilter">Od</label>
+                             <input type="date" class="form-control" id="datumodFilter" name="userFilter">
+                         </div>
+                         <div class="form-group col-md-2">
+                             <label for="datumdoFilter">Do</label>
+                             <input type="date" class="form-control" id="datumdoFilter" name="userFilter">
+                         </div>
+                         <div class="form-group col-md-2">
+                             <label></label>
+                             <button id="btnSearchUsers" class="btn btn-primary btn-block">Pretraži</button>
+                         </div>
+                     </div>
+                     <table class="table table-sm">
+                         <thead>
+                             <tr>
+                                 <th onclick="sortTable">Ime <span id="sortIcon0" class="sort-icon">&#x25B2;&#x25BC;</span></th>
+                                 <th onclick="sortTable">Prezime <span id="sortIcon1" class="sort-icon">&#x25B2;&#x25BC;</span></th>
+                                 <th>Email</th>
+                                 <th onclick="sortTable">Datum rođenja <span id="sortIcon3" class="sort-icon">&#x25B2;&#x25BC;</span></th>
+                                 <th>Pol</th>
+                             </tr>
+                         </thead>
+                         <tbody id="userTableBody">
+                             <!-- Korisnici će biti prikazani ovde -->
+                         </tbody>
+                     </table>`;
+
+                    $('#tabelaZaKorisnika').append(dodajTabelu);
+                    loadUsers();
+
+
+                    // Funkcija za učitavanje svih korisnika
+                    function loadUsers() {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/korisnici',
+                            success: function (korisnici) {
+                                displayUsers(korisnici);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Greška prilikom učitavanja korisnika:', error);
+                            }
+                        });
+                    }
+
+                    // Funkcija za prikaz korisnika u tabeli
+                    function displayUsers(users) {
+                        let rows = '';
+                        users.forEach(user => {
+                            let pol = user.Pol === 0 ? 'Muski' : 'Zenski';
+                            rows += `<tr>
+                                        <td>${user.Ime}</td>
+                                        <td>${user.Prezime}</td>
+                                        <td>${user.Email}</td>
+                                        <td>${user.DatumRodjenja}</td>
+                                        <td>${pol}</td>
+                                    </tr>`;
+                        });
+                        $('#userTableBody').html(rows);
+
+                        let imeFilter = $('#imeFilter').val('');
+                        let prezimeFilter = $('#prezimeFilter').val('');
+                        let datumodFilter = $('#datumodFilter').val('');
+                        let datumdoFilter = $('#datumdoFilter').val('');
+                    }
+
+                 
+
+
+
+                    // Event handler za dugme "Pretraži"
+                    $('#btnSearchUsers').click(function () {
+                        let imeFilter = $('#imeFilter').val().toLowerCase();
+                        let prezimeFilter = $('#prezimeFilter').val().toLowerCase();
+                        let datumodFilter = $('#datumodFilter').val();
+                        let datumdoFilter = $('#datumdoFilter').val();
+
+                        $.ajax({
+                            type: 'GET',
+                            url: '/api/korisnici',
+                            success: function (korisnici) {
+                                let filteredUsers = korisnici.filter(user => {
+                                    let imeMatch = user.Ime.toLowerCase().startsWith(imeFilter);
+                                    let prezimeMatch = user.Prezime.toLowerCase().startsWith(prezimeFilter);
+                                    let datumRodjenja = new Date(user.DatumRodjenja);
+                                    let datumodMatch = datumodFilter ? datumRodjenja >= new Date(datumodFilter) : true;
+                                    let datumdoMatch = datumdoFilter ? datumRodjenja <= new Date(datumdoFilter) : true;
+
+                                    return imeMatch && prezimeMatch && datumodMatch && datumdoMatch;
+                                });
+
+                                displayUsers(filteredUsers);
+
+                            
+
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Greška prilikom učitavanja korisnika:', error);
+                            }
+                        });
+
+                        
+                    });
+
+
+
+                    let currentSortColumn = null;
+                    let sortDirection = 1; 
+
+                    $('.sort-icon').click(function () {
+                        const columnIndex = parseInt($(this).attr('id').replace('sortIcon', ''), 10);
+                        const table = document.querySelector('#userTableBody');
+                        const rows = Array.from(table.rows);
+
+                        // Provera smera
+                        if (currentSortColumn === columnIndex) {
+                            sortDirection = -sortDirection; 
+                        } else {
+                            sortDirection = 1; // Default vrednost
+                            currentSortColumn = columnIndex;
+                        }
+
+                        // Sortiranje
+                        rows.sort((a, b) => {
+                            const cellA = a.cells[columnIndex].innerText.toLowerCase();
+                            const cellB = b.cells[columnIndex].innerText.toLowerCase();
+
+                            if (cellA < cellB) return -sortDirection;
+                            if (cellA > cellB) return sortDirection;
+                            return 0;
+                        });
+
+                        rows.forEach(row => table.appendChild(row));
+
+                        // Promena znaka
+                        updateSortIcons(columnIndex);
+                    });
+
+                    function updateSortIcons(columnIndex) {
+                        const icons = document.querySelectorAll('.sort-icon');
+                        icons.forEach((icon, index) => {
+                            if (index === columnIndex) {
+                                icon.innerHTML = sortDirection === 1 ? '&#x25B2;' : '&#x25BC;';
+                            } else {
+                                icon.innerHTML = '&#x25B2;&#x25BC;';
+                            }
+                        });
+                    }
+
+
+
+
+                }
+
+
+
+
+            } else {
+                $('#navLogin').show();
+                $('#navLogout').hide();
+                $('#navMyProfile').attr('href', 'login.html');
+            }
+
+            $('#navLogout').click(function (event) {
+                event.preventDefault();
+                logoutUser();
+            });
+
+            $('#profileForm').submit(function (event) {
+                event.preventDefault();
+                updateProfile(currentUser);
+            });
+
+            $('#statusFilter').change(function () {
+                loadReservations(currentUser, $(this).val());
+            });
+        });
+
+        function populateProfile(user) {
+            $('#username').val(user.KorisnickoIme);
+            $('#ime').val(user.Ime);
+            $('#prezime').val(user.Prezime);
+            $('#email').val(user.Email);
+            $('#datumRodjenja').val(user.DatumRodjenja);
+            $('#pol').val(user.Pol);
+        }
+
+        function updateProfile(user) {
+            user.Ime = $('#ime').val();
+            user.Prezime = $('#prezime').val();
+            user.Email = $('#email').val();
+            user.DatumRodjenja = $('#datumRodjenja').val();
+            user.Pol = $('#pol').val();
+
+            // AJAX poziv za ažuriranje korisnika na serveru
+            $.ajax({
+                type: 'PUT',
+                url: '/api/korisnici/azuriraj',
+                contentType: 'application/json',
+                data: JSON.stringify(user),
+                success: function (response) {
+                    alert('Profil uspešno ažuriran.');
+                    // Ažuriraj korisnika u sessionStorage
+                    sessionStorage.setItem('currentUser', JSON.stringify(user));
+                },
+                error: function (xhr, status, error) {
+                    alert('Greška prilikom ažuriranja profila: ' + xhr.responseText);
+                }
+            });
+        }
+
+        function logoutUser() {
+            // Brisanje korisnika iz sessionStorage
+            sessionStorage.removeItem('currentUser');
+            alert('Uspešno ste se odjavili.');
+            window.location.href = 'index.html'; // Preusmeri korisnika na početnu stranicu
+        }
+
+        function loadReservations(user, status) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/rezervacije',
+                success: function (rezervacije) {
+                    let rows = '';
+
+                    rezervacije.forEach(rez => {
+                        if (rez.Korisnik === user.KorisnickoIme && rez.Status == status) { //&& rez.JeObrisana == false
+
+                            let datumPolaskaObj = new Date(rez.Let.DatumVremePolaska);
+                            let datumDolaskaObj = new Date(rez.Let.DatumVremeDolaska);
+                            rows += `<tr>
+                            <td>${rez.Let.Aviokompanija}</td>
+                            <td>${rez.Let.PolaznaDestinacija}</td>
+                            <td>${rez.Let.OdredisnaDestinacija}</td>
+                            <td>${formatDate(datumPolaskaObj)}</td>
+                            <td>${formatDate(datumDolaskaObj)}</td>
+                            <td>${rez.BrojPutnika}</td>
+                            <td>${rez.UkupnaCena}</td>
+                            `
+                            if (status == 0 || status == 1) {
+                                rows += `<td><button class="btn btn-danger cancel-reservation" data-reservation-id="${rez.RezervacijaId}">Otkaži</button></td>`;
+                            } else {
+                                $('.otkaziRow').hide();
+
+                            }
+
+                            rows += '</tr>';
+                        }
+                    });
+                    $('#reservationTableBody').html(rows);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Greška prilikom učitavanja rezervacija:', error);
+                }
+            });
+        }
+
+        // Funkcija za otkazivanje rezervacije
+        function cancelReservation(rezervacijaId) {
+            $.ajax({
+                type: 'PUT',
+                url: `/api/rezervacije/otkazi/${rezervacijaId}`,
+                success: function (response) {
+                    // Ponovno učitavanje rezervacija nakon otkazivanja
+                    alert('Rezervacija je uspešno otkazana.');
+                    location.reload();
+                    loadReservations(currentUser, $('#statusFilter').val()); // Osvežavanje liste rezervacija
+                },
+                error: function (xhr, status, error) {
+                    alert('Greška prilikom otkazivanja rezervacije: ' + xhr.responseText);
+                }
+            });
+        }
+
+        // Event handler za klik na dugme "Otkaži"
+        $(document).on('click', '.cancel-reservation', function () {
+            let rezervacijaId = $(this).data('reservation-id');
+            cancelReservation(rezervacijaId);
+            
+        });
+
+
+
+
+        function formatDate(date) {
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let year = date.getFullYear();
+
+            return `${day}.${month}.${year}`;
+        }
+    </script>
+</body>
+</html>
